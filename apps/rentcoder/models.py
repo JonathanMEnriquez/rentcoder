@@ -116,3 +116,17 @@ class User(models.Model):
     updated_at = models.DateTimeField(auto_now = True)
     def __str__(self):
         return "User Full Name: {} {}, Email: {}, Username: {}, Password: {}".format(self.first_name, self.last_name, self.email, self.username, self.password)
+
+class Coder(models.Model):
+    first_name = models.CharField(max_length = 255)
+    alias = models.CharField(max_length = 300)
+    desc = models.TextField()
+    exam_1 = models.BooleanField(default = True)
+    exam_2 = models.BooleanField(default = True)
+    exam_3 = models.BooleanField(default = True)
+    age = models.IntegerField()
+    url_img = models.CharField(max_length = 355)
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)
+    def __str__(self):
+        return "Code first name: {}, alias: {}, desc: {}, available for exam1 {}, exam2 {}, exam3 {}, age: {}, url: {}".format(self.first_name, self.alias, self.desc, self.exam_1, self.exam_2, self.exam_3, self.age, self.url_img)
