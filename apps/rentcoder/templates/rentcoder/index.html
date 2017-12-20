@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'rentcoder/css/login_style.css' %}">
+</head>
+<body>
+    <div id="wrapper">
+        <div class="bottom_center">
+            <h1>Login</h1>
+            {% if messages %}
+                {% for message in messages %}
+                    {% if message.tags == 'warning' %}
+            <div class="error_box">
+                <p class="{{message.tags}}">{{message}}</p>
+            </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            <form action="/process/login" method="POST">
+                {% csrf_token %}
+                <div class="leftside_form">
+                    <p id="email_login">Email / Username:</p>
+                    <p>Password:</p>
+                </div>
+                <div class="rightside_form">
+                    <input type="text" class="input_field" name="user_input">
+                    <input type="password" class="input_field" name="password"><br>
+                    <input type="submit" name="Login" class="short_button">
+                </div>
+            </form>
+            <a href="/register">Don't have an account? Register here.</a>
+        </div>
+    </div>
+</body>
+</html>
