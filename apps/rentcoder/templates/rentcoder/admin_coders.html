@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Admin Dashboard Coders</title>
+    {% load static %}
+    <!-- <link rel="stylesheet" href="{% static 'userdash/css/userdash.css' %}"> -->
+    <link rel="stylesheet" href="../../static/rentcoder/css/login_style.css">
+</head>
+<body>
+    <div id="wrapper">
+        <div id="header">
+            <hr>
+            <!-- <img src="{{static 'rentcoder/img/ninja.png'}}" alt="logo"> -->
+            <img src="../../static/rentcoder/img/ninja.png" id="logo" alt="logo">
+            <h5>Admin</h5>
+            <h6>Dashboard</h6>
+            <h6 id="logoff"><a href="/logout">Log off</a></h6>
+            <hr>
+        </div>
+        <div id="main_body">
+            <h2>Manage Coders, {{user.first_name}}</h2>
+        </div>
+        <div id="menu_bar">
+            <a href="home/admin/users"><button class="menu_button">Users</button></a>
+            <button class="menu_button">Coders</button>
+            <a href="home/admin/orders"><button class="menu_button">Orders</button></a>
+        </div>
+        <div id="table">
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Alias^</th>
+                    <th>First Name</th>
+                    <th>Age</th>
+                    <th>Created_at</th>
+                    <th>Actions</th>
+                </tr>
+                {% for coder in all_coders %}
+                    <tr>
+                        <td>{{coder.id}}</td>
+                        <td>{{coder.alias}}</td>
+                        <td>{{coder.first_name}}</td>
+                        <td>{{coder.age}}</td>
+                        <td>{{coder.created_at}}</td>
+                        <td><a href="/home/edit/coder/{{coder.id}}">Edit</a> <a href="/coders/remove/{{coder.id}}">Remove</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</body>
+</html>

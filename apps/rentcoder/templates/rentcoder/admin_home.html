@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Admin Dashboard Users</title>
+    {% load static %}
+    <!-- <link rel="stylesheet" href="{% static 'rentcoder/css/login_style.css' %}"> -->
+    <link rel="stylesheet" href="../../static/rentcoder/css/login_style.css">
+</head>
+<body>
+    <div id="wrapper">
+        <div id="header">
+            <hr>
+            <!-- <img src="{{static 'rentcoder/img/ninja.png'}}" alt="logo"> -->
+            <img src="../../static/rentcoder/img/ninja.png" id="logo" alt="logo">
+            <h5>Admin</h5>
+            <h6>Dashboard</h6>
+            <h6 id="logoff"><a href="/logout">Log off</a></h6>
+            <hr>
+        </div>
+        <div id="main_body">
+            <h2>Manage Users, {{user.first_name}}</h2>
+        </div>
+        <div id="menu_bar">
+            <button class="menu_button">Users</button>
+            <a href="home/admin/coders"><button class="menu_button">Coders</button></a>
+            <a href="home/admin/orders"><button class="menu_button">Orders</button></a>
+        </div>
+        <div id="table">
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Name^</th>
+                    <th>Email</th>
+                    <th>Created</th>
+                    <th>User Level</th>
+                    <th>actions</th>
+                </tr>
+                {% for user in all_users %}
+                    <tr>
+                        <td>{{user.id}}</td>
+                        <td><a href="/home/{{user.id}}">{{user.first_name}} {{user.last_name}}</a></td>
+                        <td>{{user.email}}</td>
+                        <td>{{user.created_at}}</td>
+                        {% if user.admin == True %}
+                        <td>Admin</td>
+                        {% endif %}
+                        {% if user.admin == False %}
+                        <td>User</td>
+                        {% endif %}
+                        <td><a href="/home/edit/user/{{user.id}}">Edit</a> <a href="/users/remove/{{user.id}}">Remove</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</body>
+</html>
