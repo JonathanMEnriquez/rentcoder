@@ -251,7 +251,7 @@ class Coder(models.Model):
     exam_2 = models.BooleanField(default = True)
     exam_3 = models.BooleanField(default = True)
     age = models.IntegerField()
-    url_img = models.CharField(max_length = 355)
+    url_img = models.CharField(max_length = 500)
     objects = CoderManager()
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
@@ -259,7 +259,7 @@ class Coder(models.Model):
         return "Code first name: {}, alias: {}, desc: {}, available for exam1 {}, exam2 {}, exam3 {}, age: {}, url: {}".format(self.first_name, self.alias, self.desc, self.exam_1, self.exam_2, self.exam_3, self.age, self.url_img)
 
 class OrderManager(models.Manager):
-    def validateEditOrder(postData, order_id):
+    def validateEditOrder(self, postData, order_id):
         response = {}
         if len(postData['exam']) < 1:
             response['error'] = []
@@ -314,7 +314,7 @@ class OrderManager(models.Manager):
                         response['error'].append("Coder is unavailable for that date")
         return response
 
-    def editOrder(postData, order_id):
+    def editOrder(self, postData, order_id):
         order_edit = Order.objects.get(id = order_id)
         order_edit.exam = postData['exam']
 
