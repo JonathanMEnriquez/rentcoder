@@ -246,7 +246,7 @@ class Coder(models.Model):
     first_name = models.CharField(max_length = 255)
     alias = models.CharField(max_length = 300)
     desc = models.TextField()
-    email = models.CharField(max_length = 255)
+    email = models.CharField(max_length = 255, null=True)
     exam_1 = models.BooleanField(default = True)
     exam_2 = models.BooleanField(default = True)
     exam_3 = models.BooleanField(default = True)
@@ -267,21 +267,21 @@ class OrderManager(models.Manager):
         order = Order.objects.get(id = order_id)
         if order.coder.id != int(postData['coder']):
             coder = Coder.objects.get(id = postData['coder'])
-            if int(postData['date']) == 1:
+            if postData['date'] == 'January 26, 2017':
                 if not coder.exam_1:
                     try:
                         response['error'].append("Coder is unavailable for that date")
                     except:
                         response['error'] = []
                         response['error'].append("Coder is unavailable for that date")
-            if int(postData['date']) == 2:
+            if postData['date'] == "February 23, 2017":
                 if not coder.exam_2:
                     try:
                         response['error'].append("Coder is unavailable for that date")
                     except:
                         response['error'] = []
                         response['error'].append("Coder is unavailable for that date")
-            if int(postData['date']) == 3:
+            if postData['date'] == "March 23, 2017":
                 if not coder.exam_3:
                     try:
                         response['error'].append("Coder is unavailable for that date")
@@ -289,23 +289,23 @@ class OrderManager(models.Manager):
                         response['error'] = []
                         response['error'].append("Coder is unavailable for that date")
             return response
-        if order.date != int(postData['date']):
+        if order.date != postData['date']:
             coder = Coder.objects.get(id = postData['coder'])
-            if int(postData['date']) == 1:
+            if postData['date'] == "January 26, 2017":
                 if not coder.exam_1:
                     try:
                         response['error'].append("Coder is unavailable for that date")
                     except:
                         response['error'] = []
                         response['error'].append("Coder is unavailable for that date")
-            if int(postData['date']) == 2:
+            if postData['date'] == "February 23, 2017":
                 if not coder.exam_2:
                     try:
                         response['error'].append("Coder is unavailable for that date")
                     except:
                         response['error'] = []
                         response['error'].append("Coder is unavailable for that date")
-            if int(postData['date']) == 3:
+            if postData['date'] == "March 23, 2017":
                 if not coder.exam_3:
                     try:
                         response['error'].append("Coder is unavailable for that date")
@@ -321,7 +321,7 @@ class OrderManager(models.Manager):
 
 class Order(models.Model):
     exam_topic = models.CharField(max_length = 255)
-    date = models.IntegerField()
+    date = models.CharField(max_length = 100)
     user = models.ForeignKey(User, related_name = 'orders')
     coder = models.ForeignKey(Coder, related_name = 'jobs')
     objects = OrderManager()

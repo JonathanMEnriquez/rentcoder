@@ -45,20 +45,20 @@
                     <input type="text" class="input_field" name="exam" value="{{order.exam}}">
                     <h5>Date:</h5>
                     <select name="date" id="">
-                        <option value="1" {% if order.date == 1 %}selected = "selected"{% endif %}>Jan 26 Exam Date</option>
-                        <option value="2" {% if order.date == 2 %}selected = "selected"{% endif %}>Feb 23 Exam Date</option>
-                        <option value="3" {% if order.date == 3 %}selected = "selected"{% endif %}>Mar 23 Exam Date</option>
+                        <option value="January 26, 2017" {% if order.date == "January 26, 2017" %}selected = "selected"{% endif %}>Jan 26 Exam Date</option>
+                        <option value="February 23, 2017" {% if order.date == "February 23, 2017" %}selected = "selected"{% endif %}>Feb 23 Exam Date</option>
+                        <option value="March 23, 2017" {% if order.date == "March 23, 2017" %}selected = "selected"{% endif %}>Mar 23 Exam Date</option>
                     </select>
                     <h5>Coder:</h5>
                     <select name="coder" id="">
                         {% for coder in all_coders %}
-                        <option value="{{coder.id}}" {% if curr_coder.id == coder.id %}selected = "selected"{% endif %}>{{coder.alias}}</option>
+                        <option value="{{coder.id}}" {% if order.coder.id == coder.id %}selected = "selected"{% endif %}>{{coder.alias}}</option>
                         {% endfor %}
                     </select>
                     <h5>User:</h5>
                     <select name="coder" id="">
                         {% for user in all_users %}
-                        <option value="{{user.id}}" {% if curr_user.id == user.id %}selected = "selected"{% endif %}>{{user.first_name}} {{user.last_name}}</option>
+                        <option value="{{user.id}}" {% if order.user.id == user.id %}selected = "selected"{% endif %}>{{user.first_name}} {{user.last_name}}</option>
                         {% endfor %}
                     </select>
                     <br>
@@ -70,3 +70,4 @@
     </div>
 </body>
 </html>
+
