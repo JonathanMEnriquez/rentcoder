@@ -2,15 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Register</title>
+    <title>Coders On Demand - Register</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'rentcoder/css/login_style.css' %}">
+    <link rel="stylesheet" href="{% static 'rentcoder/css/bootstrap.css' %}">
 </head>
 <body>
-    <div id="wrapper">
-        <div class="top_center">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="col">
+                <a class="navbar-brand" href="#">
+                    <img src="{% static 'rentcoder/img/ninja.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+                    Coders On Demand
+                </a>
+            </div>
+            <div class="col">
+                <ul class="navbar-nav justify-content-end">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <hr>
+        <div>
             <h1>Registration</h1>
             {% if messages %}
             <div class="error_box">
@@ -23,26 +39,40 @@
             {% endif %}
             <form action="/process/add" method="POST">
                 {% csrf_token %}
-                <div class="leftside_form">
-                    <p>First Name:</p>
-                    <p>Last Name:</p>
-                    <p>Email:</p>
-                    <p>Username:</p>
-                    <p>Date of Birth:</p>
-                    <p>Password:</p>
-                    <p>Confirm Password:</p>
+                <div class="form-group">
+                    <label class="col-form-label" for="first_name">First Name:</label>
+                    <input type="text" class="form-control" name="first_name" placeholder="First Name">
                 </div>
-                <div class="rightside_form">
-                    <input type="text" class="input_field" name="first_name">
-                    <input type="text" class="input_field" name="last_name">
-                    <input type="text" class="input_field" name="email">
-                    <input type="text" class="input_field" name="username">
-                    <input type="date" class="input_field" name="dob">
-                    <input type="password" class="input_field" name="password">
-                    <input type="password" class="input_field" name="confirm_password"><br>
-                    <input type="submit" class="long_button" value="Register">
+                <div class="form-group">
+                    <label class="col-form-label" for="last_name">Last Name:</label>
+                    <input type="text" class="form-control" name="last_name" placeholder="Last Name">
                 </div>
+                <div class="form-group">
+                    <label class="col-form-label" for="email">Email:</label>
+                    <input type="text" class="form-control" name="email" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label" for="username">Username:</label>
+                    <input type="text" class="form-control" name="username" placeholder="Username">
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label" for="dob">Date of Birth:</label>
+                    <input type="date" class="form-control" name="dob" placeholder="Date of Birth">
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label" for="password">Password:</label>
+                    <input type="password" class="form-control" name="password" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label" for="confirm_password">Confirm Password:</label>
+                    <input type="password" class="form-control" name="confirm_password" placeholder="Confirm Password">
+                </div>
+                <button type="submit" class="btn btn-primary">Log in</button>
             </form>
+        </div>
+        <hr>
+        <div class="footer">
+            <p>© Company 2017</p>
         </div>
     </div>
 </body>

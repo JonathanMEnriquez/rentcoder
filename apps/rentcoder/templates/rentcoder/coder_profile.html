@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Coders On Demand - Profile</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'rentcoder/css/bootstrap.css' %}">
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="col">
+                <a class="navbar-brand" href="#">
+                    <img src="{% static 'rentcoder/img/ninja.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+                    Coders On Demand
+                </a>
+            </div>
+            <div class="col">
+                <ul class="navbar-nav justify-content-end">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <hr>
+        <div class="card text-center">
+            <div class="card-header">
+                {{coder.first_name}}
+            </div>
+            <img class="card-img-top" src="{{coder.url_img}}" alt="Coder picture">
+            <div class="card-body">
+                <h5 class="card-text">{{coder.alias}}</h5>
+                <p class="card-text">{{coder.age}}</p>
+                <p class="card-text">{{coder.email}}</p>
+                <p class="card-text">{{coder.desc}}</p>
+                <a href="/order" class="btn btn-primary">Go Back</a>
+            </div>
+        </div>
+        <hr>
+        <div class="footer">
+            <p>© Company 2017</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Coders On Demand - Browse Coders</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'rentcoder/css/bootstrap.css' %}">
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="col">
+                <a class="navbar-brand" href="#">
+                    <img src="{% static 'rentcoder/img/ninja.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+                    Coders On Demand
+                </a>
+            </div>
+            <div class="col">
+                <ul class="navbar-nav justify-content-end">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <hr>
+        <h3>Browse Coders</h3>
+        {% for coder in coders %}
+        <div class="card" style="width: 20rem;">
+            <img class="card-img-top" src="{{coder.url_img}}" alt="Coder picture">
+            <div class="card-body">
+                <h4 class="card-title">{{coder.first_name}}</h4>
+                <h5 class="card-text">{{coder.alias}}</h5>
+                <p class="card-text">{{coder.desc}}</p>
+                <a href="#" class="btn btn-primary">Learn More</a>
+            </div>
+        </div>      
+        {% endfor %}
+        <hr>
+        <h3>Hire A Coder!</h3>
+        <form action="/" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="coder">Coder:</label>
+                <select class="form-control" name="coder">
+                    <option></option>
+                    {% for coder in coders %}
+                    <option value="{{coder.id}}">{{coder.first_name}}</option>
+                    {% endfor %}
+                </select>
+            </div> 
+            <div class="form-group">                       
+                <label for="exam_subject">Exam Subject:</label>
+                <select class="form-control" name="exam_subject">
+                    <option value="Web Fundamentals">Web Fundamentals</option>
+                    <option value="Python/Django">Python/Django</option>
+                    <option value="Ruby on Rails">Ruby on Rails</option>
+                    <option value="MEAN">MEAN</option>
+                    <option value="iOS Applications">iOS Applications</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="date">Dates:</label>
+                <select class="form-control" name="date">
+                    <option value="January 26, 2018">January 26, 2018</option>
+                    <option value="February 23, 2018">February 23, 2018</option>
+                    <option value="March 23, 2018">March 23, 2018</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Go Checkout</button>            
+        </form>
+        <hr>
+        <div class="footer">
+            <p>© Company 2017</p>
+        </div>
+    </div>
+</body>
+</html>
