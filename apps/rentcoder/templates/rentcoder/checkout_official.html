@@ -27,14 +27,24 @@
         </nav>
         <div id="checkout_section">
             <form action="/charge" method="POST">
+                {% csrf_token %}
+                <h4>Order Summary:</h4>
+                <label class="font-weight-bold">Coder:</label>
+                <p>{{coder_name}}</p>
+                <label class="font-weight-bold">Exam Subject:</label>
+                <p>{{request.session.cart.exam}}</p>
+                <label class="font-weight-bold">Date:</label>
+                <p>{{request.session.cart.date}}</p>
+                <label class="font-weight-bold">Price:</label>
+                <p>$199.95</p>
                 <script
                 src="https://checkout.stripe.com/checkout.js"
                 class="stripe-button"
                 data-key="pk_test_6pRNASCoBOKtIshFeQd4XMUh"
-                data-image="/square-image.png"
-                data-name="Demo Site"
-                data-description="2 widgets ($20.00)"
-                data-amount="2000">
+                data-image="{% static 'rentcoder/img/ninja.png' %}"
+                data-name="Coders On Demand"
+                data-description="1 Black Belt - $199.95"
+                data-amount="19995">
                 </script>
             </form>
         </div>

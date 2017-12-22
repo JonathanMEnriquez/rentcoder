@@ -23,13 +23,7 @@
                         <a class="nav-link" href="/register">Register</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="
-                        {% if request.session.id %}
-                            #login
-                        {% else %}
-                            /process/login
-                        {% endif %}
-                        ">Log In</a>
+                        <a class="nav-link" href="#login">Log In</a>
                     </li>
                 </ul>
             </div>
@@ -39,7 +33,14 @@
                 <h1 class="display-3 text-center">Coders. On Demand!</h1>
                 <p class="lead text-center">Tired of failing your Coding Dojo belt exams? Can't wait to start the next stack? Coders On Demand to the rescue!</p>
                 <p class="lead text-center">
-                    <a class="btn btn-primary btn-lg" href="#login" role="button">Hire Now!</a>
+                    <a class="btn btn-primary btn-lg" 
+                    href="
+                    {% if request.session.id %}
+                        /dashboard/{{request.session.id}}
+                    {% else %}
+                        #login
+                    {% endif %}"
+                    role="button">Hire Now!</a>
                 </p>
             </div>
         </div>
@@ -52,7 +53,6 @@
                     <div class="card-body">
                         <h4 class="card-title">Browse</h4>
                         <p class="card-text">Select a belt exam you want it aced and browse profiles of our talented coders</p>
-                        <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
                     </div>
                 </div>
                 <div class="card">
@@ -60,7 +60,6 @@
                     <div class="card-body">
                         <h4 class="card-title">Pay</h4>
                         <p class="card-text">Make secure payments through Stripe's popular payment processing platform</p>
-                        <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
                     </div>
                 </div>
                 <div class="card">
@@ -68,7 +67,6 @@
                     <div class="card-body">
                         <h4 class="card-title">Work</h4>
                         <p class="card-text">Provide your hired gun with exam information, then relax, and see your exam ACED!</p>
-                        <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
                     </div>
                 </div>
             </div>
