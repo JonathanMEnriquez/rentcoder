@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Edit Order</title>
+    {% load static %}
+    <!-- <link rel="stylesheet" href="{% static 'rentcoder/css/login_style.css' %}"> -->
+    <link rel="stylesheet" href="../../static/rentcoder/css/login_style.css">
+</head>
+<body>
+    <div id="wrapper">
+        <div id="header">
+            <hr>
+            <!-- <img src="{{static 'rentcoder/img/ninja.png'}}" alt="logo"> -->
+            <img src="../../static/rentcoder/img/ninja.png" id="logo" alt="logo">
+            <h5>Admin</h5>
+            <h6>Dashboard</h6>
+            <h6 id="logoff"><a href="/logout">Log off</a></h6>
+            <hr>
+        </div>
+        <div id="main_body">
+            <h1>Edit Order</h1>
+            <a href="/home/admin/users"><button class="menu_button">Return to Dashboard</button></a>
+        </div>
+        <div id="login_section">
+            <div class="only_form">
+                <h5>Edit Information</h5>
+                    {% if messages %}
+                <div class="error_box">
+                        {% for message in messages %}
+                            {% if message.tags == 'error' %}
+                    <p class="{{message.tags}}">{{message}}</p>
+                            {% endif %}
+                            {% if message.tags == 'success' %}
+                    <p class="{{message.tags}}">{{message}}</p>
+                            {% endif %}
+                        {% endfor %}
+                </div>
+                    {% endif %}
+                <form action="/edit/orders/{{order.id}}" method="POST">
+                        {% csrf_token %}
+                    <h5>Exam:</h5>
+                    <input type="text" class="input_field" name="exam" value="{{order.exam}}">
+                    <h5>Date:</h5>
+                    <select name="date" id="">
+                        <option value="January 26, 2017" {% if order.date == "January 26, 2017" %}selected = "selected"{% endif %}>Jan 26 Exam Date</option>
+                        <option value="February 23, 2017" {% if order.date == "February 23, 2017" %}selected = "selected"{% endif %}>Feb 23 Exam Date</option>
+                        <option value="March 23, 2017" {% if order.date == "March 23, 2017" %}selected = "selected"{% endif %}>Mar 23 Exam Date</option>
+                    </select>
+                    <h5>Coder:</h5>
+                    <select name="coder" id="">
+                        {% for coder in all_coders %}
+                        <option value="{{coder.id}}" {% if order.coder.id == coder.id %}selected = "selected"{% endif %}>{{coder.alias}}</option>
+                        {% endfor %}
+                    </select>
+                    <h5>User:</h5>
+                    <select name="coder" id="">
+                        {% for user in all_users %}
+                        <option value="{{user.id}}" {% if order.user.id == user.id %}selected = "selected"{% endif %}>{{user.first_name}} {{user.last_name}}</option>
+                        {% endfor %}
+                    </select>
+                    <br>
+                    <br>
+                    <input type="submit" class="menu_button" value="Save">
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
