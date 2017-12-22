@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Edit User</title>
     {% load static %}
-    <!-- <link rel="stylesheet" href="{% static 'rentcoder/css/login_style.css' %}"> -->
-    <link rel="stylesheet" href="../../static/rentcoder/css/login_style.css">
+    <link rel="stylesheet" href="{% static 'rentcoder/css/login_style.css' %}">
+    <!-- <link rel="stylesheet" href="../../static/rentcoder/css/login_style.css"> -->
 </head>
 <body>
     <div id="wrapper">
         <div id="header">
             <hr>
-            <!-- <img src="{{static 'rentcoder/img/ninja.png'}}" alt="logo"> -->
-            <img src="../../static/rentcoder/img/ninja.png" id="logo" alt="logo">
+            <img id="logo" src="{% static 'rentcoder/img/ninja.png' %}" alt="logo">
+            <!-- <img src="../../static/rentcoder/img/ninja.png" id="logo" alt="logo"> -->
             <h5>Admin</h5>
             <h6>Dashboard</h6>
             <h6 id="logoff"><a href="/logout">Log off</a></h6>
