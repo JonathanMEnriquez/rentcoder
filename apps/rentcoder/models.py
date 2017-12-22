@@ -176,6 +176,15 @@ class UserManager(models.Manager):
         user = User.objects.get(id=user_id)
         user.password = hashed_pw
         user.save()
+        return
+
+    def removeUser(self, user_id):
+        try:
+            user = User.objects.get(id = user_id)
+        except:
+            return False
+        user.delete()
+        return True
 
 class User(models.Model):
     first_name = models.CharField(max_length = 255)
@@ -242,6 +251,14 @@ class CoderManager(models.Manager):
         update.save()
         return user_id
 
+    def removeCoder(self, coder_id):
+        try:
+            coder = Coder.objects.get(id = coder_id)
+        except:
+            return False
+        coder.delete()
+        return True
+
 class Coder(models.Model):
     first_name = models.CharField(max_length = 255)
     alias = models.CharField(max_length = 300)
@@ -259,6 +276,20 @@ class Coder(models.Model):
         return "Code first name: {}, alias: {}, desc: {}, available for exam1 {}, exam2 {}, exam3 {}, age: {}, url: {}".format(self.first_name, self.alias, self.desc, self.exam_1, self.exam_2, self.exam_3, self.age, self.url_img)
 
 class OrderManager(models.Manager):
+    def addOrder(self):
+        try:
+            neworder = Order()
+            neworder.exam_topic = request.session['cart']['exam']
+            neworder.date = request.session['cart']['date']
+            coder = Coder.objects.get(id = request.session['cart']['coder'])
+            neworder.coder = coder
+            user = User.objects.get(id = request.session['id'])
+            neworder.user = user
+            neworder.save()
+            return neworder
+        except:
+            return False
+
     def validateEditOrder(self, postData, order_id):
         response = {}
         if len(postData['exam']) < 1:
@@ -318,6 +349,20 @@ class OrderManager(models.Manager):
         order_edit = Order.objects.get(id = order_id)
         order_edit.exam = postData['exam']
 
+    def removeOrder(self, order_id):
+        try:
+            order = Order.objects.get(id = order_id)
+        except:
+            return False
+        coder_id = order.coder.id
+        coder = Coder.objects.get(id = coder_id)
+        if order.date == "January 26, 2017":
+            coder.exam_1 = True
+        if order.date == "February 23, 2017":
+            coder.exam_2 = True
+        if order.date == "March 23, 2017":
+            coder.exam_3 = True
+        return True
 
 class Order(models.Model):
     exam_topic = models.CharField(max_length = 255)
@@ -328,4 +373,4 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
     def __str__(self):
-        return "Order Exam: {}, By: {}, With: {}".format(self.exam, self.user, self.coder)
+        return "Order Exam: {}, By: {}, With: {}".format(self.exam_topic, self.user, self.coder)
