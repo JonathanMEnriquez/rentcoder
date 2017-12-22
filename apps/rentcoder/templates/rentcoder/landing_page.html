@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Coders On Demand</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'rentcoder/css/bootstrap.css' %}">
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="col">
+                <a class="navbar-brand" href="#">
+                    <img src="{% static 'rentcoder/img/ninja.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+                    Coders On Demand
+                </a>
+            </div>
+            <div class="col">
+                <ul class="navbar-nav justify-content-end">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Log In</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="jumbotron">
+            <div class="container">
+                <h1 class="display-3 text-center">Coders. On Demand!</h1>
+                <p class="lead text-center">Tired of failing your Coding Dojo belt exams? Can't wait to start the next stack? Coders On Demand to the rescue!</p>
+                <p class="lead text-center">
+                    <a class="btn btn-primary btn-lg" href="#" role="button">Hire Now!</a>
+                </p>
+            </div>
+        </div>
+        <hr>
+
+        <h2 class="text-center">How it works</h2>
+        <div class="card-deck">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Browse</h4>
+                    <p class="card-text">Select a belt exam you want it aced. Browse profiles of our talented coders.</p>
+                    <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Payt</h4>
+                    <p class="card-text">Invoicing and making payments through Stripe's secure payment processing platform.</p>
+                    <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Work</h4>
+                    <p class="card-text">Provide your hired gun with exam information, relax, and see it ACED!</p>
+                    <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div>
+            <h3>Login</h3>
+            {% if messages %}
+                {% for message in messages %}
+                    {% if message.tags == 'warning' %}
+                        <div class="alert alert-error">
+                            <p class="{{message.tags}}">{{message}}</p>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            <form action="/process/login" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label class="col-form-label" for="user_input">Email / Username:</label>
+                    <input type="text" class="form-control" id="user_input" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label" for="password">Password:</label>
+                    <input type="text" class="form-control" id="password" placeholder="Password">
+                </div>
+                <button type="submit" class="btn btn-primary">Log in</button>
+            </form>
+            <a href="/register">Don't have an account? Register here.</a>
+        </div>
+        <hr>
+        <div class="footer">
+            <p>© Company 2017</p>
+        </div>
+    </div>
+</body>
+</html>

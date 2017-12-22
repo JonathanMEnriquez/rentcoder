@@ -5,8 +5,8 @@ from .models import *
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib import messages
 
-def index(request):
-    return render(request, 'rentcoder/index.html')
+def landing_page(request):
+    return render(request, 'rentcoder/landing_page.html')
 
 def register(request):
     return render(request, 'rentcoder/register.html')
