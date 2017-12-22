@@ -5,7 +5,7 @@ from .models import *
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib import messages
 
-def index(request):
+def landing_page(request):
     if Coder.objects.all().count() == 0:
         Coder.objects.create(first_name = 'Joe', alias = '2manygirlz', desc = "Hey. What’s up? My name is Joe (not my real name), aka 2manygirlz. I am a really funny guy but when it comes to coding I’m very serious…like Disneyland-during-rainstorms-serious. I can get you all the black belts you need to slay the laaaaydes. Hit me up!", email = 'laydasman@mail.com', age = 45, url_img = "https://i.ytimg.com/vi/3uFNiwrSqZA/maxresdefault.jpg")
         Coder.objects.create(first_name = 'Dmitry', alias = 'down_with_Putin23', desc = "Hello! My name is Dmitry, also known as down_with_Putin23. I like the sushi and the coding. Enough, please, do not make me choose what I like best, because it will be impossible for me to do it. I know that all the languages and platforms they teach it in your Dojo Coding hire me to help you get job in your land of freedom. :)", email = 'dmitrycodingmaster@gmail.com', age = 31, url_img = "https://2ch.hk/b/arch/2017-02-18/src/146992234/14874280958510.jpg")
@@ -140,7 +140,7 @@ def edit_coder_process(request, coder_id):
     # VALIDATE CHANGES
     return redirect('/')
 
-def edit_order_process(request order_id):
+def edit_order_process(request, order_id):
     try:
         request.session['id']
     except:
@@ -189,7 +189,7 @@ def dashboard(request, user_id):
     except:
         return redirect('/')
     the_user = User.objects.get(id=request.session['id'])
-    if request.session['id'] != user_id and not the_user.admin):
+    if request.session['id'] != user_id and not the_user.admin:
         return redirect('/dashboard/{}'.format(user_id))
     context = {
         'user_orders'   : Order.objects.filter(user=the_user)

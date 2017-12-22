@@ -1,2 +1,2 @@
-*.pyv
+*.pyc
 db.sqlite3
