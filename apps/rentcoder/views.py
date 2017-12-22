@@ -16,35 +16,96 @@ def landing_page(request):
     }
     return render(request, 'rentcoder/landing_page.html', context)
 
-def login(request):
-    return render(request, 'rentcoder/login.html')
-
 def logout(request):
-    request.session.clear()
+    if 'cart' in request.session:
+        cart = request.session['cart']
+        request.session.clear()
+        request.session['cart'] = cart
+    else:
+        request.session.clear()
     return redirect('/')
 
 def register(request):
+    if 'id' in request.session:
+        return redirect('/dashboard/{}'.format(request.session['id']))
     return render(request, 'rentcoder/register.html')
 
+def remove_user(request, user_id):
+    try:
+        request.session['id']
+    except:
+        return redirect('/')
+    checkuser = User.objects.get(id = request.session['id'])
+    if not checkuser.admin:
+        return redirect('/dashboard/'+str(request.session['id']))
+
+    User.objects.removeUser(user_id)
+    return redirect('/home/admin/users')
+
+def remove_coder(request, coder_id):
+    try:
+        request.session['id']
+    except:
+        return redirect('/')
+    checkuser = User.objects.get(id = request.session['id'])
+    if not checkuser.admin:
+        return redirect('/dashboard/'+str(request.session['id']))
+
+    Coder.objects.removeCoder(coder_id)
+    return redirect('/home/admin/coders')
+
+def remove_order(request, order_id):
+    try:
+        request.session['id']
+    except:
+        return redirect('/')
+    checkuser = User.objects.get(id = request.session['id'])
+    if not checkuser.admin:
+        return redirect('/dashboard/'+str(request.session['id']))
+
+    Order.objects.removeOrder(order_id)
+    return redirect('/home/admin/orders')
+
 def order(request):
+    try:
+        request.session['id']
+    except:
+        return redirect('/')
+
     context = {
         'coders'    : Coder.objects.all()[:3] # ONLY 3 CODERS
     }
     return render(request, 'rentcoder/order.html', context)
 
 def checkout(request):
-    return HttpResponse("checkout page ~ idk stripe yet")
+    try:
+        request.session['id']
+    except:
+        return redirect('/')
+
+    request.session['cart'] = {
+        'coder'     : request.POST['coder'],
+        'exam'      : request.POST['exam_subject'],
+        'date'      : request.POST['date']
+    }
+    return render(request, 'rentcoder/checkout_official.html')
+
+def charge(request):
+    Order.objects.addOrder
+    return redirect('/dashboard/'+str(request.session['id']))
 
 def admin_users(request):
     try:
         request.session['id']
     except:
-        return redirect('/login')
+        return redirect('/')
     checkuser = User.objects.get(id = request.session['id'])
     if not checkuser.admin:
-        return redirect('/dashboard')
+        return redirect('/dashboard/'+str(request.session['id']))
+
     context = {
-        'users' : User.objects.all()
+        'user' : User.objects.get(id=request.session['id']),
+        'all_users' : User.objects.all()
     }
     return render(request, 'rentcoder/admin_home.html', context)
 
@@ -52,12 +113,14 @@ def admin_coders(request):
     try:
         request.session['id']
     except:
-        return redirect('/login')
+        return redirect('/')
     checkuser = User.objects.get(id = request.session['id'])
     if not checkuser.admin:
-        return redirect('/dashboard')
+        return redirect('/dashboard/'+str(request.session['id']))
+
     context = {
-        'coders' : Coder.objects.all()
+        'user' : User.objects.get(id=request.session['id']),
+        'all_coders' : Coder.objects.all()
     }
     return render(request, 'rentcoder/admin_coders.html', context)
 
@@ -65,12 +128,14 @@ def admin_orders(request):
     try:
         request.session['id']
     except:
-        return redirect('/login')
+        return redirect('/')
     checkuser = User.objects.get(id = request.session['id'])
     if not checkuser.admin:
-        return redirect('/dashboard')
+        return redirect('/dashboard/'+str(request.session['id']))
+
     context = {
-        'orders' : Order.objects.all()
+        'user' : User.objects.get(id=request.session['id']),
+        'all_orders' : Order.objects.all()
     }
     return render(request, 'rentcoder/admin_orders.html', context)
 
@@ -78,38 +143,38 @@ def edit_user(request, user_id):
     try:
         request.session['id']
     except:
-        return redirect('/login')
+        return redirect('/')
     checkuser = User.objects.get(id = request.session['id'])
     if not checkuser.admin:
-        return redirect('/dashboard')
+        return redirect('/dashboard/'+str(request.session['id']))
 
     context = {
         'user' : User.objects.get(id=user_id)
     }
-    return render(request, 'rentcoder/admin_edit_user.html')
+    return render(request, 'rentcoder/admin_edit_user.html', context)
 
 def edit_coder(request, coder_id):
     try:
         request.session['id']
     except:
-        return redirect('/login')
+        return redirect('/')
     checkuser = User.objects.get(id = request.session['id'])
     if not checkuser.admin:
-        return redirect('/dashboard')
+        return redirect('/dashboard/'+str(request.session['id']))
 
     context = {
         'coder' : Coder.objects.get(id=coder_id)
     }
-    return render(request, 'rentcoder/admin_edit_coder.html')
+    return render(request, 'rentcoder/admin_edit_coder.html', context)
 
 def edit_order(request, order_id):
     try:
         request.session['id']
     except:
-        return redirect('/login')
+        return redirect('/')
     checkuser = User.objects.get(id = request.session['id'])
     if not checkuser.admin:
-        return redirect('/dashboard')
+        return redirect('/dashboard/'+str(request.session['id']))
 
     context = {
         'order' : Order.objects.get(id=order_id),
@@ -122,34 +187,55 @@ def edit_user_process(request, user_id):
     try:
         request.session['id']
     except:
-        return redirect('/login')
+        return redirect('/')
     checkuser = User.objects.get(id = request.session['id'])
     if not checkuser.admin:
-        return redirect('/dashboard/{}'.format(request.session['id']))
-    # VALIDATE CHANGES
-    return redirect('/')
+        return redirect('/dashboard/'+str(request.session['id']))
+    # VALIDATE CHANGES?
+    errors = User.objects.validateEditUser(request.POST,user_id)
+    if errors:
+        for message in errors['errors']:
+            messages.error(request, message)
+    else:
+        User.objects.editUser(request.POST,user_id)
+        messages.success(request, 'Succesfully Updated User')
+    return redirect('/edit/user/{}'.format(user_id))
 
 def edit_coder_process(request, coder_id):
     try:
         request.session['id']
     except:
-        return redirect('/login')
+        return redirect('/')
     checkuser = User.objects.get(id = request.session['id'])
     if not checkuser.admin:
-        return redirect('/dashboard/{}'.format(request.session['id']))
-    # VALIDATE CHANGES
-    return redirect('/')
+        return redirect('/dashboard/'+str(request.session['id']))
+    # VALIDATE CHANGES?
+    errors = Coder.objects.validateEditCoder(request.POST,coder_id)
+    if errors:
+        for message in errors['errors']:
+            messages.error(request, message)
+    else:
+        Coder.objects.editCoder(request.POST,coder_id)
+        messages.success(request, 'Succesfully Updated Coder')
+    return redirect('/edit/coder/{}'.format(coder_id))
 
 def edit_order_process(request, order_id):
     try:
         request.session['id']
     except:
-        return redirect('/login')
+        return redirect('/')
     checkuser = User.objects.get(id = request.session['id'])
     if not checkuser.admin:
-        return redirect('/dashboard/{}'.format(request.session['id']))
-    # VALIDATE CHANGES
-    return redirect('/')
+        return redirect('/dashboard/'+str(request.session['id']))
+    # VALIDATE CHANGES?
+    errors = Order.objects.validateEditOrder(request.POST,order_id)
+    if errors:
+        for message in errors['errors']:
+            messages.error(request, message)
+    else:
+        Order.objects.editOrder(request.POST,order_id)
+        messages.success(request, 'Succesfully Updated Order')
+    return redirect('/edit/order/{}'.format(order_id))
 
 def process(request, action):
     if request.method == 'POST':
@@ -158,7 +244,7 @@ def process(request, action):
             if len(check_submission) > 0:
                 for message in check_submission['error']:
                     messages.error(request, message)
-                return redirect('/')
+                return redirect('/register')
             else:
                 newuser = User.objects.addUser(request.POST)
                 if User.objects.all().count() == 1:
@@ -171,15 +257,15 @@ def process(request, action):
         elif action == 'login':
             if len(request.POST['user_input']) < 1 or len(request.POST['password']) < 8:
                 messages.warning(request, 'Invalid login information')
-                return redirect('/login')
-            user = User.objects.validateLogin(request.POST)
-            if user:
-                request.session['id'] = user
+                return redirect('/')
+            user_id = User.objects.validateLogin(request.POST)
+            if user_id:
+                request.session['id'] = user_id
                 return redirect('/dashboard/'+str(request.session['id']))
             else:
                 messages.warning(request, 'Invalid login information')
-                return redirect('/login')
-            return redirect('/login')
+                return redirect('/')
+            return redirect('/')
     else:
         print 'get out of the main process'
         return redirect('/')
@@ -190,14 +276,19 @@ def dashboard(request, user_id):
     except:
         return redirect('/')
     the_user = User.objects.get(id=request.session['id'])
-    if request.session['id'] != user_id and not the_user.admin:
-        return redirect('/dashboard/{}'.format(user_id))
+    if request.session['id'] != int(user_id) and not the_user.admin:
+        return redirect('/dashboard/'+str(request.session['id']))
     context = {
-        'user_orders'   : Order.objects.filter(user=the_user)
+        'all_orders'   : Order.objects.filter(user=user_id),
+        'user'          : User.objects.get(id=user_id)
     }
     return render(request, 'rentcoder/dashboard.html', context)
 
 def coder_profile(request, coder_id):
+    try:
+        request.session['id']
+    except:
+        return redirect('/')
     context = {
         'coder' : Coder.objects.get(id=coder_id)
     }
