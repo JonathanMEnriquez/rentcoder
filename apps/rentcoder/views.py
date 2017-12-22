@@ -88,7 +88,7 @@ def checkout(request):
         'exam'      : request.POST['exam_subject'],
         'date'      : request.POST['date']
     }
-    return render(request, 'rentcoder/checkout_official.html')
+    return render(request, 'rentcoder/checkout_official.html', {'coder_name' : Coder.objects.get(id=request.POST['coder'])})
 
 def charge(request):
     cart = request.session['cart']
