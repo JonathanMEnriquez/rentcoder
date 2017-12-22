@@ -30,7 +30,7 @@
                 {% csrf_token %}
                 <h4>Order Summary:</h4>
                 <label class="font-weight-bold">Coder:</label>
-                <p>{{coder_name}}</p>
+                <p>{{coder_name.alias}}</p>
                 <label class="font-weight-bold">Exam Subject:</label>
                 <p>{{request.session.cart.exam}}</p>
                 <label class="font-weight-bold">Date:</label>
