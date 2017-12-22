@@ -494,7 +494,7 @@ hr {
   margin-top: 1rem;
   margin-bottom: 1rem;
   border: 0;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 small,
@@ -1567,6 +1567,7 @@ pre code {
 .table th,
 .table td {
   padding: 0.75rem;
+  padding-left: 0px;
   vertical-align: top;
   border-top: 1px solid #e9ecef;
 }
@@ -4503,7 +4504,7 @@ tbody.collapse.show {
 .jumbotron {
   padding: 2rem 1rem;
   margin-bottom: 2rem;
-  background-color: #e9ecef;
+  background-color: #dfe7f0;
   border-radius: 0.3rem;
 }
 
@@ -8370,5 +8371,67 @@ a.text-dark:focus, a.text-dark:hover {
 
 .invisible {
   visibility: hidden !important;
+}
+
+#reg {
+  margin: 20px 0px 60px 30px;
+}
+
+.footer {
+  padding-left: 30px;
+  margin-bottom: 60px;
+}
+
+.footer p{
+  text-align: center;
+}
+
+#login{
+  margin: 0px 0px 100px 20px;
+}
+
+#dash_body{
+  margin: 30px 0px 50px 30px;
+}
+
+#browse_coders{
+  margin: 30px;
+}
+
+#hire_form{
+  margin: 30px 30px 60px 30px;
+}
+
+.profile_label{
+  font-size: 18px;
+}
+
+#profile{
+  margin: 30px 30px 60px 30px;
+}
+
+#link_2_reg{
+  margin-top: 20px;
+}
+
+#how_it_works{
+  margin: 60px 0px;
+}
+
+#login{
+  margin-top: 50px; 
+}
+
+#checkout_section{
+  margin: 40px 30px;
+}
+
+#how_it_works_line{
+  margin-bottom: 40px;
+}
+
+#powered_by_stripe{
+  display: block;
+  margin-top: 20px;
 }
 /*# sourceMappingURL=bootstrap.css.map */

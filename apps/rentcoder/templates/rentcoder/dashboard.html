@@ -12,7 +12,7 @@
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="col">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="/">
                     <img src="{% static 'rentcoder/img/ninja.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
                     Coders On Demand
                 </a>
@@ -20,8 +20,9 @@
             <div class="col">
                 <ul class="navbar-nav justify-content-end">
                     <li class="nav-item active">
-                        <a class="nav-link" href="/">Home</a>
+                        <a class="nav-link" href="/logout">Logout</a>
                     </li>
+                    <!-- Admin button fixed in views.py -->
                     {% if user.admin %}
                     <li class="nav-item">
                         <a class="nav-link" href="/home/admin">Admin</a>
@@ -30,25 +31,26 @@
                 </ul>
             </div>
         </nav>
-        <hr>
-        <h3>Orders</h3>
-        <table>
-            <thead>
-                <th>Exam Subject</th>
-                <th>Date</th>
-                <th>Coder Name</th>
-            </thead>
-            <tbody>
-            {% for order in all_orders %}
-                <tr>
-                    <td>{{order.exam_topic}}</td>
-                    <td>{{order.date}}</td>
-                    <td>{{order.coder}}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-        <button><a href="/order">Add Order</a></button>
+        <div id="dash_body">
+            <h3>Orders</h3>
+            <table class="table">
+                <thead>
+                    <th>Exam Subject</th>
+                    <th>Date</th>
+                    <th>Coder Name</th>
+                </thead>
+                <tbody>
+                {% for order in all_orders %}
+                    <tr>
+                        <td>{{order.exam_topic}}</td>
+                        <td>{{order.date}}</td>
+                        <td>{{order.coder.alias}}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <a href="/order" class="btn btn-primary" role="button">Add Order</a>
+        </div>
         <hr>
         <div class="footer">
             <p>© Company 2017</p>
