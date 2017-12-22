@@ -276,16 +276,18 @@ class Coder(models.Model):
         return "Code first name: {}, alias: {}, desc: {}, available for exam1 {}, exam2 {}, exam3 {}, age: {}, url: {}".format(self.first_name, self.alias, self.desc, self.exam_1, self.exam_2, self.exam_3, self.age, self.url_img)
 
 class OrderManager(models.Manager):
-    def addOrder(self):
+    def addOrder(self, cart, user_id):
         try:
             neworder = Order()
-            neworder.exam_topic = request.session['cart']['exam']
-            neworder.date = request.session['cart']['date']
-            coder = Coder.objects.get(id = request.session['cart']['coder'])
-            neworder.coder = coder
-            user = User.objects.get(id = request.session['id'])
-            neworder.user = user
-            neworder.save()
+            user = User.objects.get(id = user_id)
+            coder = Coder.objects.get(id = cart['coder'])
+            neworder = Order.objects.create(exam_topic = cart['exam'], date = cart['date'], coder = coder, user = user)
+            # neworder.exam_topic = cart['exam']
+            # neworder.date = cart['date']
+            # neworder.coder = coder
+            # neworder.user = user
+            # print neworder,'here'
+            # neworder.save()
             return neworder
         except:
             return False
@@ -369,6 +371,7 @@ class OrderManager(models.Manager):
             coder.exam_2 = True
         if order.date == "March 23, 2017":
             coder.exam_3 = True
+        order.delete()
         return True
 
 class Order(models.Model):
