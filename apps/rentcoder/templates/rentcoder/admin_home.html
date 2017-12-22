@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Admin Dashboard Users</title>
     {% load static %}
-    <!-- <link rel="stylesheet" href="{% static 'rentcoder/css/login_style.css' %}"> -->
-    <link rel="stylesheet" href="../../static/rentcoder/css/login_style.css">
+    <link rel="stylesheet" href="{% static 'rentcoder/css/login_style.css' %}">
+    <!-- <link rel="stylesheet" href="../../static/rentcoder/css/login_style.css"> -->
 </head>
 <body>
     <div id="wrapper">
         <div id="header">
             <hr>
-            <!-- <img src="{{static 'rentcoder/img/ninja.png'}}" alt="logo"> -->
-            <img src="../../static/rentcoder/img/ninja.png" id="logo" alt="logo">
+            <img id="logo" src="{% static 'rentcoder/img/ninja.png' %}" alt="logo">
+            <!-- <img src="../../static/rentcoder/img/ninja.png" id="logo" alt="logo"> -->
             <h5>Admin</h5>
             <h6>Dashboard</h6>
             <h6 id="logoff"><a href="/logout">Log off</a></h6>
@@ -25,8 +25,8 @@
         </div>
         <div id="menu_bar">
             <button class="menu_button">Users</button>
-            <a href="home/admin/coders"><button class="menu_button">Coders</button></a>
-            <a href="home/admin/orders"><button class="menu_button">Orders</button></a>
+            <a href="/home/admin/coders"><button class="menu_button">Coders</button></a>
+            <a href="/home/admin/orders"><button class="menu_button">Orders</button></a>
         </div>
         <div id="table">
             <table>
@@ -36,7 +36,7 @@
                     <th>Email</th>
                     <th>Created</th>
                     <th>User Level</th>
-                    <th>actions</th>
+                    <th>Actions</th>
                 </tr>
                 {% for user in all_users %}
                     <tr>
