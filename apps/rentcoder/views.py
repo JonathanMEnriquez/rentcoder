@@ -162,11 +162,12 @@ def process(request, action):
             else:
                 newuser = User.objects.addUser(request.POST)
                 if User.objects.all().count() == 1:
-                    User.objects.first().admin = True
-
+                    user_admin = User.objects.first()
+                    user_admin.admin = True
+                    user_admin.save()
                 print newuser
                 request.session['id'] = newuser.id
-                return redirect('/home')
+                return redirect('/dashboard/'+str(request.session['id']))
         elif action == 'login':
             if len(request.POST['user_input']) < 1 or len(request.POST['password']) < 8:
                 messages.warning(request, 'Invalid login information')
@@ -174,7 +175,7 @@ def process(request, action):
             user = User.objects.validateLogin(request.POST)
             if user:
                 request.session['id'] = user
-                return redirect('/home')
+                return redirect('/dashboard/'+str(request.session['id']))
             else:
                 messages.warning(request, 'Invalid login information')
                 return redirect('/login')
