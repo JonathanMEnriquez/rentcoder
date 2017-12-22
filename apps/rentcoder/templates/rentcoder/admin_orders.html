@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Admin Dashboard Orders</title>
+    {% load static %}
+    <!-- <link rel="stylesheet" href="{% static 'rentcoder/css/login_style.css' %}"> -->
+    <link rel="stylesheet" href="../../static/rentcoder/css/login_style.css">
+</head>
+<body>
+    <div id="wrapper">
+        <div id="header">
+            <hr>
+            <!-- <img src="{{static 'rentcoder/img/ninja.png'}}" alt="logo"> -->
+            <img src="../../static/rentcoder/img/ninja.png" id="logo" alt="logo">
+            <h5>Admin</h5>
+            <h6>Dashboard</h6>
+            <h6 id="logoff"><a href="/logout">Log off</a></h6>
+            <hr>
+        </div>
+        <div id="main_body">
+            <h2>Manage Coders, {{user.first_name}}</h2>
+        </div>
+        <div id="menu_bar">
+            <a href="home/admin/users"><button class="menu_button">Users</button></a>
+            <a href="home/admin/coders"><button class="menu_button">Coders</button></a>
+            <button class="menu_button">Orders</button>
+        </div>
+        <div id="table">
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Date^</th>
+                    <th>User</th>
+                    <th>Coder</th>
+                    <th>Exam</th>
+                    <th>Actions</th>
+                </tr>
+                {% for order in all_orders %}
+                    <tr>
+                        <td>{{order.id}}</td>
+                        <td>{{order.date}}</td>
+                        <td>{{order.user.first_name}}</td>
+                        <td>{{order.coder.alias}}</td>
+                        <td>{{order.exam}}</td>
+                        <td><a href="/edit/order/{{order.id}}">Edit</a> <a href="/orders/remove/{{order.id}}">Remove</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</body>
+</html>

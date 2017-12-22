@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Edit Coder</title>
+    {% load static %}
+    <!-- <link rel="stylesheet" href="{% static 'rentcoder/css/login_style.css' %}"> -->
+    <link rel="stylesheet" href="../../static/rentcoder/css/login_style.css">
+</head>
+<body>
+    <div id="wrapper">
+        <div id="header">
+            <hr>
+            <!-- <img src="{{static 'rentcoder/img/ninja.png'}}" alt="logo"> -->
+            <img src="../../static/rentcoder/img/ninja.png" id="logo" alt="logo">
+            <h5>Admin</h5>
+            <h6>Dashboard</h6>
+            <h6 id="logoff"><a href="/logout">Log off</a></h6>
+            <hr>
+        </div>
+        <div id="main_body">
+            <h1>Edit Coder</h1>
+            <a href="/home/admin/users"><button class="menu_button">Return to Dashboard</button></a>
+        </div>
+        <div id="login_section">
+            <div class="only_form">
+                <h5>Edit Information</h5>
+                    {% if messages %}
+                <div class="error_box">
+                        {% for message in messages %}
+                            {% if message.tags == 'error' %}
+                    <p class="{{message.tags}}">{{message}}</p>
+                            {% endif %}
+                            {% if message.tags == 'success' %}
+                    <p class="{{message.tags}}">{{message}}</p>
+                            {% endif %}
+                        {% endfor %}
+                </div>
+                    {% endif %}
+                <form action="/edit/coders/{{coder.id}}" method="POST">
+                        {% csrf_token %}
+                    <h5>First Name:</h5>
+                    <input type="text" class="input_field" name="first_name" value="{{coder.first_name}}">
+                    <h5>Alias:</h5>
+                    <input type="text" class="input_field" name="alias" value="{{coder.alias}}">
+                    <h5>Email:</h5>
+                    <input type="text" class="input_field" name="email" value="{{coder.email}}">
+                    <h5>Description:</h5>
+                    <textarea name="desc" cols="30" rows="10">{{coder.desc}}</textarea>
+                    <h5>Age:</h5>
+                    <input type="text" class="input_field" name="age" value="{{coder.age}}">
+                    <br>
+                    <input type="submit" class="menu_button" value="Save">
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

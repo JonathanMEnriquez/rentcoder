@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Edit User</title>
+    {% load static %}
+    <!-- <link rel="stylesheet" href="{% static 'rentcoder/css/login_style.css' %}"> -->
+    <link rel="stylesheet" href="../../static/rentcoder/css/login_style.css">
+</head>
+<body>
+    <div id="wrapper">
+        <div id="header">
+            <hr>
+            <!-- <img src="{{static 'rentcoder/img/ninja.png'}}" alt="logo"> -->
+            <img src="../../static/rentcoder/img/ninja.png" id="logo" alt="logo">
+            <h5>Admin</h5>
+            <h6>Dashboard</h6>
+            <h6 id="logoff"><a href="/logout">Log off</a></h6>
+            <hr>
+        </div>
+        <div id="main_body">
+            <h1>Edit User</h1>
+            <a href="/home/admin/users"><button class="menu_button">Return to Dashboard</button></a>
+        </div>
+        <div id="login_section">
+            <div class="leftside_form">
+                <h5>Edit Information</h5>
+                    {% if messages %}
+                <div class="error_box">
+                        {% for message in messages %}
+                            {% if message.tags == 'error' %}
+                    <p class="{{message.tags}}">{{message}}</p>
+                            {% endif %}
+                            {% if message.tags == 'success' %}
+                    <p class="{{message.tags}}">{{message}}</p>
+                            {% endif %}
+                        {% endfor %}
+                </div>
+                    {% endif %}
+                <form action="/edit/users/{{user.id}}" method="POST">
+                        {% csrf_token %}
+                    <h5>Email Address:</h5>
+                    <input type="text" class="input_field" name="email" value="{{user.email}}">
+                    <h5>First Name:</h5>
+                    <input type="text" class="input_field" name="first_name" value="{{user.first_name}}">
+                    <h5>Last Name:</h5>
+                    <input type="text" class="input_field" name="last_name" value="{{user.last_name}}">
+                    <h5>User Level:</h5>
+                    <select name="admin">
+                        {% if user.admin == True %}
+                        <option value="True">Admin</option>
+                        <option value="False">User</option>
+                        {% endif %}
+                        {% if user.admin == False %}
+                        <option value="False">User</option>
+                        <option value="True">Admin</option>
+                        {% endif %}
+                    </select>
+                    <h5>Username:</h5>
+                    <input type="text" class="input_field" name="username" value="{{user.username}}">br
+                    <input type="submit" class="menu_button" value="Save">
+                </form>
+            </div>
+            <div class="rightside_form">
+                <h5>Change Password</h5>
+                <form action="/editpass/{{user.id}}" method="POST">
+                    {% csrf_token %}
+                    <h5>Password:</h5>
+                    <input type="password" class="input_field" name="password">
+                    <h5>Confirm Password:</h5>
+                    <input type="password" class="input_field" name="confirm_password"><br>
+                    <input type="submit" value="Change Password">
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
