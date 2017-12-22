@@ -91,7 +91,9 @@ def checkout(request):
     return render(request, 'rentcoder/checkout_official.html')
 
 def charge(request):
-    Order.objects.addOrder
+    cart = request.session['cart']
+    user_id = request.session['id']
+    neworder = Order.objects.addOrder(cart, user_id)
     return redirect('/dashboard/'+str(request.session['id']))
 
 def admin_users(request):
