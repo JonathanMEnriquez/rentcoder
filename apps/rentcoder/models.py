@@ -249,7 +249,7 @@ class CoderManager(models.Manager):
         update.desc = postData['desc']
         update.alias = postData['alias']
         update.save()
-        return user_id
+        return coder_id
 
     def removeCoder(self, coder_id):
         try:
@@ -348,6 +348,13 @@ class OrderManager(models.Manager):
     def editOrder(self, postData, order_id):
         order_edit = Order.objects.get(id = order_id)
         order_edit.exam = postData['exam']
+        order_edit.date = postData['date']
+        coder = Coder.objects.get(id = order_edit.coder.id)
+        user = Coder.objects.get(id = order_edit.user.id)
+        order_edit.coder = coder
+        order_edit.user = user
+        order_edit.save()
+        return order_id
 
     def removeOrder(self, order_id):
         try:
