@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Coders On Demand - Profile</title>
+    <title>Coders On Demand - Checkout</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'rentcoder/css/bootstrap.css' %}">
 </head>
@@ -25,22 +25,18 @@
                 </ul>
             </div>
         </nav>
-        <div id="profile" class="card text-center">
-            <h2>
-                {{coder.first_name}}
-            </h2>
-            <img class="card-img-top" src="{{coder.url_img}}" alt="Coder picture">
-            <div class="card-body">
-                <label class="font-weight-bold">Alias:</label>
-                <p id="alias" class="card-text">{{coder.alias}}</p>
-                <label class="font-weight-bold">Age:</label>
-                <p id="age" class="card-text">{{coder.age}}</p>
-                <label class="font-weight-bold">Email:</label>
-                <p id="email" class="card-text">Email: {{coder.email}}</p>
-                <label class="font-weight-bold">Bio:</label>
-                <p id="bio" class="card-text">{{coder.desc}}</p>
-                <a href="/order" class="btn btn-primary">Go Back</a>
-            </div>
+        <div id="checkout_section">
+            <form action="/charge" method="POST">
+                <script
+                src="https://checkout.stripe.com/checkout.js"
+                class="stripe-button"
+                data-key="pk_test_6pRNASCoBOKtIshFeQd4XMUh"
+                data-image="/square-image.png"
+                data-name="Demo Site"
+                data-description="2 widgets ($20.00)"
+                data-amount="2000">
+                </script>
+            </form>
         </div>
         <hr>
         <div class="footer">
