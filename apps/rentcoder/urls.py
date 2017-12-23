@@ -23,5 +23,7 @@ urlpatterns = [
     url(r'^edit/order/(?P<order_id>\d+)$', views.edit_order),
     url(r'^edit/orders/(?P<order_id>\d+)$', views.edit_order_process),
     url(r'^coder_profile/(?P<coder_id>\d+)$', views.coder_profile),
+    url(r'^add_message/(?P<user_id>\d+)$', views.addmessage),
+    url(r'^add_comment/(?P<user_id>\d+)/(?P<message_id>\d+)$', views.addcomment),
     url(r'^process/(?P<action>\w+)$', views.process),
 ]

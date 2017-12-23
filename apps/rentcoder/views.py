@@ -282,7 +282,8 @@ def dashboard(request, user_id):
         return redirect('/dashboard/'+str(request.session['id']))
     context = {
         'all_orders'   : Order.objects.filter(user=user_id),
-        'user'          : User.objects.get(id=user_id)
+        'user'          : User.objects.get(id=user_id),
+        'user_messages': Message.objects.filter(addressee = user_id),
     }
     return render(request, 'rentcoder/dashboard.html', context)
 
@@ -298,3 +299,41 @@ def coder_profile(request, coder_id):
 
 def admin_home(request):
     return redirect('/home/admin/users')
+
+def addmessage(request, user_id):
+    if request.method == 'POST':
+        try:
+            creator = User.objects.get(id = request.session['id'])
+            addressee = User.objects.get(id = user_id)
+        except:
+            return redirect('/dashboard/{}'.format(user_id))
+        check_submission = Message.objects.validateMessage(request.POST)
+        if len(check_submission) > 0:
+            messages.error(request, check_submission['error'])
+            return redirect('/dashboard/{}'.format(user_id))
+        else:
+            new_message = Message.objects.addMessage(request.POST, creator, addressee)
+            return redirect('/dashboard/'+str(user_id))
+    else:
+        print 'get out of addmessage'
+        return redirect('/dashboard/'+str(user_id))
+
+def addcomment(request, user_id, message_id):
+    if request.method == 'POST':
+        try:
+            creator = User.objects.get(id = request.session['id'])
+            addressee = User.objects.get(id = user_id)
+        except:
+            return redirect('/dashboard/'+str(user_id))
+        check_submission = Comment.objects.validateComment(request.POST)
+        if len(check_submission) > 0:
+            messages.error(request, check_submission['error'])
+            return redirect('/dashboard/'+str(user_id))
+        else:
+            message = Message.objects.get(id = message_id)
+            user = User.objects.get(id = request.session['id'])
+            new_comment = Comment.objects.addComment(request.POST, user, message)
+            return redirect('/dashboard/'+str(user_id))
+    else:
+        print 'get out of addcomment'
+        return redirect('/dashboard/'+str(user_id))

@@ -278,7 +278,7 @@ class Coder(models.Model):
 class OrderManager(models.Manager):
     def addOrder(self, cart, user_id):
         try:
-            neworder = Order()
+            # neworder = Order()
             user = User.objects.get(id = user_id)
             coder = Coder.objects.get(id = cart['coder'])
             neworder = Order.objects.create(exam_topic = cart['exam'], date = cart['date'], coder = coder, user = user)
@@ -384,3 +384,45 @@ class Order(models.Model):
     updated_at = models.DateTimeField(auto_now = True)
     def __str__(self):
         return "Order Exam: {}, By: {}, With: {}".format(self.exam_topic, self.user, self.coder)
+
+class MessageManager(models.Manager):
+    def validateMessage(self, postData):
+        response = {}
+        if len(postData['content']) < 1:
+            response['error'] = []
+            response['error'].append("You don't have a message to post.")
+        return response
+    def addMessage(self, postData, created_by, addressed_to):
+        newmessage = Message.objects.create(content = postData['content'], user = created_by, addressee = addressed_to)
+        return newmessage
+
+class Message(models.Model):
+    content = models.TextField()
+    user = models.ForeignKey(User, related_name = 'messages')
+    addressee = models.ForeignKey(User, related_name = 'messages_to')
+    objects = MessageManager()
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)
+    def __str__(self):
+        return self.content
+
+class CommentManager(models.Manager):
+    def validateComment(self, postData):
+        response = {}
+        if len(postData['content']) < 1:
+            response['error'] = []
+            response['error'].append("You don't have a message to post.")
+        return response
+    def addComment(self, postData, created_by, message_id):
+        newcomment = Comment.objects.create(content = postData['content'], user = created_by, message = message_id)
+        return newcomment
+
+class Comment(models.Model):
+    content = models.TextField()
+    user = models.ForeignKey(User, related_name = 'comments')
+    message = models.ForeignKey(Message, related_name = 'comments')
+    objects = CommentManager()
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)
+    def __str__(self):
+        return self.content
