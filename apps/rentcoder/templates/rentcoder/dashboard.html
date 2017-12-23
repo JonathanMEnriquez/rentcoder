@@ -19,15 +19,14 @@
             </div>
             <div class="col">
                 <ul class="navbar-nav justify-content-end">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/logout">Logout</a>
-                    </li>
-                    <!-- Admin button fixed in views.py -->
                     {% if user.admin %}
                     <li class="nav-item">
                         <a class="nav-link" href="/home/admin">Admin</a>
                     </li>                        
                     {% endif %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
                 </ul>
             </div>
         </nav>
