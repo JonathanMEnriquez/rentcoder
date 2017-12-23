@@ -38,30 +38,32 @@
             <a href="/home/admin/orders"><button class="menu_button">Orders</button></a>
         </div>
         <div id="table">
-            <table>
-                <tr>
+            <table class="table">
+                <thead>
                     <th>ID</th>
                     <th>Name</th>
                     <th>Email</th>
                     <th>Created</th>
                     <th>User Level</th>
                     <th>Actions</th>
-                </tr>
-                {% for user in all_users %}
-                    <tr>
-                        <td>{{user.id}}</td>
-                        <td><a href="/dashboard/{{user.id}}">{{user.first_name}} {{user.last_name}}</a></td>
-                        <td>{{user.email}}</td>
-                        <td>{{user.created_at}}</td>
-                        {% if user.admin == True %}
-                        <td>Admin</td>
-                        {% endif %}
-                        {% if user.admin == False %}
-                        <td>User</td>
-                        {% endif %}
-                        <td><a href="/edit/user/{{user.id}}">Edit</a> <a href="/users/remove/{{user.id}}">Remove</a></td>
-                    </tr>
-                {% endfor %}
+                </thead>
+                <tbody>
+                    {% for user in all_users %}
+                        <tr>
+                            <td>{{user.id}}</td>
+                            <td><a href="/dashboard/{{user.id}}">{{user.first_name}} {{user.last_name}}</a></td>
+                            <td>{{user.email}}</td>
+                            <td>{{user.created_at}}</td>
+                            {% if user.admin == True %}
+                            <td>Admin</td>
+                            {% endif %}
+                            {% if user.admin == False %}
+                            <td>User</td>
+                            {% endif %}
+                            <td><a href="/edit/user/{{user.id}}">Edit</a> <a href="/users/remove/{{user.id}}">Remove</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
             </table>
         </div>
     </div>
