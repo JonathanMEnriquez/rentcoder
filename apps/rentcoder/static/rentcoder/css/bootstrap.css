@@ -8435,5 +8435,7 @@ a.text-dark:focus, a.text-dark:hover {
   margin-top: 20px;
 }
 
-
+#admin_dash_body{
+  margin: 30px 0px 50px 30px;
+}
 /*# sourceMappingURL=bootstrap.css.map */

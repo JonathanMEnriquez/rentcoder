@@ -47,7 +47,8 @@
                     </tr>
                 {% endfor %}
                 </tbody>
-            </table>
+            </table>            
+            <a href="/order" class="btn btn-primary" role="button">Add Order</a>
             <div id="new_messages">
                 <h2>Leave a message for {{user.first_name}}</h2>
                 <form action="/add_message/{{user.id}}", method="POST">
@@ -55,7 +56,7 @@
                     <textarea name="content" id="textarea" cols="160" rows="7"></textarea>
                     <input type="submit" value="Post" id="register_button">
                 </form>
-            </div>
+            </div>            
             <div id="messageboard">
                 {% for message in user_messages %}
                     <div class="messages">
@@ -77,7 +78,6 @@
                     </form>
                 {% endfor %}
             </div>
-            <a href="/order" class="btn btn-primary" role="button">Add Order</a>
         </div>
         <hr>
         <div class="footer">
