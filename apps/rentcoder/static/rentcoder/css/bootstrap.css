@@ -2544,6 +2544,7 @@ fieldset[disabled] a.btn {
   background-color: transparent;
   background-image: none;
   border-color: #007bff;
+  margin-top: 10px;
 }
 
 .btn-outline-primary:hover {
@@ -8391,7 +8392,7 @@ a.text-dark:focus, a.text-dark:hover {
 }
 
 #dash_body{
-  margin: 30px 0px 50px 30px;
+  margin: 30px 30px 50px 30px;
 }
 
 #browse_coders{
@@ -8436,6 +8437,27 @@ a.text-dark:focus, a.text-dark:hover {
 }
 
 #admin_dash_body{
-  margin: 30px 0px 50px 30px;
+  margin: 30px 30px 50px 30px;
 }
+
+#myTab{
+  margin-top: 30px;
+}
+
+#edit_btn{
+  margin-right: 20px;
+}
+
+.tr_left_margin{
+  padding-left: 20px;
+}
+
+#new_message{
+  margin-top: 50px;
+}
+
+#login_alert, #reg_alert{
+  margin: 0px;
+}
+
 /*# sourceMappingURL=bootstrap.css.map */

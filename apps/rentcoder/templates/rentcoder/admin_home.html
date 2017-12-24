@@ -30,7 +30,7 @@
         </nav>
         <hr>
         <div id="admin_dash_body">
-            <h2>Administrator: {{user.first_name}}</h2>
+            <h3>Administrator: {{user.first_name}}</h3>
             <nav class="nav nav-tabs" id="myTab" role="tablist">
                 <a class="nav-item nav-link active" id="subnav-users-tab" data-toggle="tab" href="#subnav-users" role="tab" aria-controls="subnav-users" aria-selected="true">Users</a>
                 <a class="nav-item nav-link" id="subnav-coders-tab" data-toggle="tab" href="#subnav-coders" role="tab" aria-controls="subnav-coders" aria-selected="false">Coders</a>
@@ -38,8 +38,8 @@
             </nav>
             <div class="tab-content" id="subnav-tabContent">
                 <div class="tab-pane fade show active" id="subnav-users" role="tabpanel" aria-labelledby="subnav-users-tab">
-                    <table class="table">
-                        <thead>
+                    <table class="table table-hover">
+                        <thead class="tr_left_margin">
                             <th>ID</th>
                             <th>Name</th>
                             <th>Email</th>
@@ -60,15 +60,15 @@
                                 {% if user.admin == False %}
                                 <td>User</td>
                                 {% endif %}
-                                <td><a href="/edit/user/{{user.id}}">Edit</a> <a href="/users/remove/{{user.id}}">Remove</a></td>
+                                <td><a id="edit_btn" href="/edit/user/{{user.id}}">Edit</a><a href="/users/remove/{{user.id}}">Remove</a></td>
                             </tr>
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
                 <div class="tab-pane fade" id="subnav-coders" role="tabpanel" aria-labelledby="subnav-coders-tab">
-                    <table>
-                        <thead>
+                    <table class="table table-hover">
+                        <thead class="tr_left_margin">
                             <th>ID</th>
                             <th>Alias^</th>
                             <th>First Name</th>
@@ -91,8 +91,8 @@
                     </table>
                 </div>
                 <div class="tab-pane fade" id="subnav-orders" role="tabpanel" aria-labelledby="subnav-orders-tab">
-                    <table>
-                        <thead>
+                    <table class="table table-hover">
+                        <thead class="tr_left_margin">
                             <th>ID</th>
                             <th>Date^</th>
                             <th>User</th>
@@ -115,6 +115,10 @@
                     </table>
                 </div>
             </div>
+        </div>
+        <hr>
+        <div class="footer">
+            <p>© Company 2017</p>
         </div>
     </div>
 </body>
