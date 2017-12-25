@@ -6,66 +6,85 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Edit Order</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'rentcoder/css/login_style.css' %}">
-    <!-- <link rel="stylesheet" href="../../static/rentcoder/css/login_style.css"> -->
+    <link rel="stylesheet" href="{% static 'rentcoder/css/bootstrap.css' %}">
 </head>
 <body>
-    <div id="wrapper">
-        <div id="header">
-            <hr>
-            <img id="logo" src="{% static 'rentcoder/img/ninja.png' %}" alt="logo">
-            <!-- <img src="../../static/rentcoder/img/ninja.png" id="logo" alt="logo"> -->
-            <h5>Admin</h5>
-            <h6>Dashboard</h6>
-            <h6 id="logoff"><a href="/logout">Log off</a></h6>
-            <hr>
-        </div>
-        <div id="main_body">
-            <h1>Edit Order</h1>
-            <a href="/home/admin/users"><button class="menu_button">Return to Dashboard</button></a>
-        </div>
-        <div id="login_section">
-            <div class="only_form">
-                <h5>Edit Information</h5>
-                    {% if messages %}
-                <div class="error_box">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="col">
+                <a class="navbar-brand" href="/">
+                    <img src="{% static 'rentcoder/img/ninja.png' %}" width="30" height="30" class="d-inline-block align-top" alt="Coders On Demand logo">
+                    Coders On Demand - Admin Dashboard
+                </a>
+            </div>
+            <div class="col">
+                <ul class="navbar-nav justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <hr>
+        <div id="admin_dash_body">
+            <h3>Administrator: {{user.first_name}}</h3>
+            <h5>Edit Order Information</h5>
+                {% if messages %}
+                    <div class="error_box">
                         {% for message in messages %}
                             {% if message.tags == 'error' %}
-                    <p class="{{message.tags}}">{{message}}</p>
+                                <div class="alert alert-danger" role="alert">
+                                    <p id="reg_alert" class="{{message.tags}}">{{message}}</p>
+                                </div>
                             {% endif %}
                             {% if message.tags == 'success' %}
-                    <p class="{{message.tags}}">{{message}}</p>
+                                <div class="alert alert-danger" role="alert">
+                                    <p id="reg_alert" class="{{message.tags}}">{{message}}</p>
+                                </div>
                             {% endif %}
                         {% endfor %}
+                    </div>
+                {% endif %}
+            <form action="/edit/orders/{{order.id}}" method="POST">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label class="col-form-label" for="exam">Exam:</label>
+                        <input type="text" class="form-control" name="exam" value="{{order.exam_topic}}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="col-form-label" for="date">Date:</label>
+                        <select name="date" class="form-control">
+                            <option value="January 26, 2018" {% if order.date == "January 26, 2018" %}selected = "selected"{% endif %}>Jan 26 Exam Date</option>
+                            <option value="February 23, 2018" {% if order.date == "February 23, 2018" %}selected = "selected"{% endif %}>Feb 23 Exam Date</option>
+                            <option value="March 23, 2018" {% if order.date == "March 23, 2018" %}selected = "selected"{% endif %}>Mar 23 Exam Date</option>
+                        </select>
+                    </div>
                 </div>
-                    {% endif %}
-                <form action="/edit/orders/{{order.id}}" method="POST">
-                        {% csrf_token %}
-                    <h5>Exam:</h5>
-                    <input type="text" class="input_field" name="exam" value="{{order.exam_topic}}">
-                    <h5>Date:</h5>
-                    <select name="date" id="">
-                        <option value="January 26, 2017" {% if order.date == "January 26, 2018" %}selected = "selected"{% endif %}>Jan 26 Exam Date</option>
-                        <option value="February 23, 2017" {% if order.date == "February 23, 2018" %}selected = "selected"{% endif %}>Feb 23 Exam Date</option>
-                        <option value="March 23, 2017" {% if order.date == "March 23, 2018" %}selected = "selected"{% endif %}>Mar 23 Exam Date</option>
-                    </select>
-                    <h5>Coder:</h5>
-                    <select name="coder" id="">
-                        {% for coder in all_coders %}
-                        <option value="{{coder.id}}" {% if order.coder.id == coder.id %}selected = "selected"{% endif %}>{{coder.alias}}</option>
-                        {% endfor %}
-                    </select>
-                    <h5>User:</h5>
-                    <select name="coder" id="">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label class="col-form-label" for="coder">Coder:</label>
+                        <select name="coder" class="form-control">
+                            {% for coder in all_coders %}
+                                <option value="{{coder.id}}" {% if order.coder.id == coder.id %}selected = "selected"{% endif %}>{{coder.alias}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="col-form-label" for="alias">Alias:</label>
+                        <input type="text" class="form-control" name="alias" value="{{coder.alias}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label" for="user">User:</label>
+                    <select name="user" class="form-control">
                         {% for user in all_users %}
-                        <option value="{{user.id}}" {% if order.user.id == user.id %}selected = "selected"{% endif %}>{{user.first_name}} {{user.last_name}}</option>
+                            <option value="{{user.id}}" {% if order.user.id == user.id %}selected = "selected"{% endif %}>{{user.first_name}} {{user.last_name}}</option>
                         {% endfor %}
                     </select>
-                    <br>
-                    <br>
-                    <input type="submit" class="menu_button" value="Save">
-                </form>
-            </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
         </div>
     </div>
 </body>

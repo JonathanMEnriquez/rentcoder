@@ -8460,4 +8460,11 @@ a.text-dark:focus, a.text-dark:hover {
   margin: 0px;
 }
 
+#return_btn{
+  margin-top: 20px;
+}
+
+#edit_info{
+  margin-top: 30px; 
+}
 /*# sourceMappingURL=bootstrap.css.map */
