@@ -48,6 +48,35 @@
                 {% endfor %}
                 </tbody>
             </table>
+            <div id="new_messages">
+                <h2>Leave a message for {{user.first_name}}</h2>
+                <form action="/add_message/{{user.id}}", method="POST">
+                    {% csrf_token %}
+                    <textarea name="content" id="textarea" cols="160" rows="7"></textarea>
+                    <input type="submit" value="Post" id="register_button">
+                </form>
+            </div>
+            <div id="messageboard">
+                {% for message in user_messages %}
+                    <div class="messages">
+                        <p>{{message.user.first_name}} wrote</p>
+                        <p>{{message.created_at}}</p>
+                        <h6>{{message.content}}</h6>
+                    </div>
+                    {% for comment in message.comments.all %}
+                        <div class="comments">
+                            <p>{{comment.user.first_name}} wrote</p>
+                            <p>{{comment.created_at}}</p>
+                            <h6>{{comment.content}}</h6>
+                        </div>  
+                    {% endfor %}
+                    <form action="/add_comment/{{user.id}}/{{message.id}}" method="POST">
+                        {% csrf_token %}
+                        <textarea name="content" id="textarea" cols="100" rows="7"></textarea>
+                        <input type="submit" value="Post" id="register_button">
+                    </form>
+                {% endfor %}
+            </div>
             <a href="/order" class="btn btn-primary" role="button">Add Order</a>
         </div>
         <hr>
