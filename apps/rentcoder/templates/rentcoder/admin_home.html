@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{% static 'rentcoder/css/bootstrap.css' %}">
 </head>
 <body>
-    <div id="container">
+    <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="col">
                 <a class="navbar-brand" href="/">
@@ -28,43 +28,96 @@
                 </ul>
             </div>
         </nav>
+        <div id="admin_dash_body">
+            <h3>Administrator: {{user.first_name}}</h3>
+            <nav class="nav nav-tabs" id="myTab" role="tablist">
+                <a class="nav-item nav-link active" id="subnav-users-tab" data-toggle="tab" href="#subnav-users" role="tab" aria-controls="subnav-users" aria-selected="true">Users</a>
+                <a class="nav-item nav-link" id="subnav-coders-tab" data-toggle="tab" href="#subnav-coders" role="tab" aria-controls="subnav-coders" aria-selected="false">Coders</a>
+                <a class="nav-item nav-link" id="subnav-orders-tab" data-toggle="tab" href="#subnav-orders" role="tab" aria-controls="subnav-orders" aria-selected="false">Orders</a>
+            </nav>
+            <div class="tab-content" id="subnav-tabContent">
+                <div class="tab-pane fade show active" id="subnav-users" role="tabpanel" aria-labelledby="subnav-users-tab">
+                    <table class="table table-hover">
+                        <thead class="tr_left_margin">
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Created</th>
+                            <th>User Level</th>
+                            <th>Actions</th>
+                        </thead>
+                        <tbody>
+                            {% for user in all_users %}
+                            <tr>
+                                <td>{{user.id}}</td>
+                                <td><a href="/dashboard/{{user.id}}">{{user.first_name}} {{user.last_name}}</a></td>
+                                <td>{{user.email}}</td>
+                                <td>{{user.created_at}}</td>
+                                {% if user.admin == True %}
+                                <td>Admin</td>
+                                {% endif %}
+                                {% if user.admin == False %}
+                                <td>User</td>
+                                {% endif %}
+                                <td><a id="edit_btn" href="/edit/user/{{user.id}}">Edit</a><a href="/users/remove/{{user.id}}">Remove</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane fade" id="subnav-coders" role="tabpanel" aria-labelledby="subnav-coders-tab">
+                    <table class="table table-hover">
+                        <thead class="tr_left_margin">
+                            <th>ID</th>
+                            <th>Alias^</th>
+                            <th>First Name</th>
+                            <th>Age</th>
+                            <th>Created_at</th>
+                            <th>Actions</th>
+                        </thead>
+                        <tbody>
+                            {% for coder in all_coders %}
+                            <tr>
+                                <td>{{coder.id}}</td>
+                                <td>{{coder.alias}}</td>
+                                <td>{{coder.first_name}}</td>
+                                <td>{{coder.age}}</td>
+                                <td>{{coder.created_at}}</td>
+                                <td><a href="/edit/coder/{{coder.id}}">Edit</a> <a href="/coders/remove/{{coder.id}}">Remove</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane fade" id="subnav-orders" role="tabpanel" aria-labelledby="subnav-orders-tab">
+                    <table class="table table-hover">
+                        <thead class="tr_left_margin">
+                            <th>ID</th>
+                            <th>Date^</th>
+                            <th>User</th>
+                            <th>Coder</th>
+                            <th>Exam</th>
+                            <th>Actions</th>
+                        </thead>
+                        <tbody>
+                            {% for order in all_orders %}
+                            <tr>
+                                <td>{{order.id}}</td>
+                                <td>{{order.date}}</td>
+                                <td>{{order.user.first_name}}</td>
+                                <td>{{order.coder.alias}}</td>
+                                <td>{{order.exam_topic}}</td>
+                                <td><a href="/edit/order/{{order.id}}">Edit</a> <a href="/orders/remove/{{order.id}}">Remove</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-        <div id="main_body">
-            <h2>Manage Users, {{user.first_name}}</h2>
-        </div>
-        <div id="menu_bar">
-            <button class="menu_button">Users</button>
-            <a href="/home/admin/coders"><button class="menu_button">Coders</button></a>
-            <a href="/home/admin/orders"><button class="menu_button">Orders</button></a>
-        </div>
-        <div id="table">
-            <table class="table">
-                <thead>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Created</th>
-                    <th>User Level</th>
-                    <th>Actions</th>
-                </thead>
-                <tbody>
-                    {% for user in all_users %}
-                        <tr>
-                            <td>{{user.id}}</td>
-                            <td><a href="/dashboard/{{user.id}}">{{user.first_name}} {{user.last_name}}</a></td>
-                            <td>{{user.email}}</td>
-                            <td>{{user.created_at}}</td>
-                            {% if user.admin == True %}
-                            <td>Admin</td>
-                            {% endif %}
-                            {% if user.admin == False %}
-                            <td>User</td>
-                            {% endif %}
-                            <td><a href="/edit/user/{{user.id}}">Edit</a> <a href="/users/remove/{{user.id}}">Remove</a></td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        <hr>
+        <div class="footer">
+            <p>© Company 2017</p>
         </div>
     </div>
 </body>

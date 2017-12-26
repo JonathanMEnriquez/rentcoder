@@ -6,49 +6,79 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Edit User</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'rentcoder/css/login_style.css' %}">
-    <!-- <link rel="stylesheet" href="../../static/rentcoder/css/login_style.css"> -->
+    <link rel="stylesheet" href="{% static 'rentcoder/css/bootstrap.css' %}">
 </head>
 <body>
-    <div id="wrapper">
-        <div id="header">
-            <hr>
-            <img id="logo" src="{% static 'rentcoder/img/ninja.png' %}" alt="logo">
-            <!-- <img src="../../static/rentcoder/img/ninja.png" id="logo" alt="logo"> -->
-            <h5>Admin</h5>
-            <h6>Dashboard</h6>
-            <h6 id="logoff"><a href="/logout">Log off</a></h6>
-            <hr>
-        </div>
-        <div id="main_body">
-            <h1>Edit User</h1>
-            <a href="/home/admin/users"><button class="menu_button">Return to Dashboard</button></a>
-        </div>
-        <div id="login_section">
-            <div class="leftside_form">
-                <h5>Edit Information</h5>
-                    {% if messages %}
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="col">
+                <a class="navbar-brand" href="/">
+                    <img src="{% static 'rentcoder/img/ninja.png' %}" width="30" height="30" class="d-inline-block align-top" alt="Coders On Demand logo">
+                    Coders On Demand - Admin Dashboard
+                </a>
+            </div>
+            <div class="col">
+                <ul class="navbar-nav justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div id="admin_dash_body">
+            <h3>Administrator: {{user.first_name}}</h3>
+            <h5 id="edit_info">Edit User Information</h5>
+            {% if messages %}
                 <div class="error_box">
-                        {% for message in messages %}
-                            {% if message.tags == 'error' %}
-                    <p class="{{message.tags}}">{{message}}</p>
-                            {% endif %}
-                            {% if message.tags == 'success' %}
-                    <p class="{{message.tags}}">{{message}}</p>
-                            {% endif %}
-                        {% endfor %}
+                    {% for message in messages %}
+                        {% if message.tags == 'error' %}
+                            <div class="alert alert-danger" role="alert">
+                                <p id="reg_alert" class="{{message.tags}}">{{message}}</p>
+                            </div>
+                        {% endif %}
+                        {% if message.tags == 'success' %}
+                            <div class="alert alert-danger" role="alert">
+                                <p id="reg_alert" class="{{message.tags}}">{{message}}</p>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
                 </div>
-                    {% endif %}
-                <form action="/edit/users/{{user.id}}" method="POST">
-                        {% csrf_token %}
-                    <h5>Email Address:</h5>
-                    <input type="text" class="input_field" name="email" value="{{user.email}}">
-                    <h5>First Name:</h5>
-                    <input type="text" class="input_field" name="first_name" value="{{user.first_name}}">
-                    <h5>Last Name:</h5>
-                    <input type="text" class="input_field" name="last_name" value="{{user.last_name}}">
-                    <h5>User Level:</h5>
-                    <select name="admin">
+            {% endif %}
+            <form action="/edit/users/{{user.id}}" method="POST">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label class="col-form-label" for="first_name">First Name:</label>
+                        <input type="text" class="form-control" name="first_name" value="{{user.first_name}}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="col-form-label" for="last_name">Last Name:</label>
+                        <input type="text" class="form-control" name="last_name" value="{{user.last_name}}">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label class="col-form-label" for="username">Username:</label>
+                        <input type="text" class="form-control" name="username" value="{{user.username}}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="col-form-label" for="email">Email:</label>
+                        <input type="text" class="form-control" name="email" value="{{user.email}}">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label class="col-form-label" for="password">Password:</label>
+                        <input type="password" class="form-control" name="password">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="col-form-label" for="confirm_pw">Confirm Password:</label>
+                        <input type="password" class="form-control" name="confirm_pw">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label" for="admin">User Level:</label>
+                    <select name="admin" class="form-control">
                         {% if user.admin == True %}
                         <option value="True">Admin</option>
                         <option value="False">User</option>
@@ -58,22 +88,14 @@
                         <option value="True">Admin</option>
                         {% endif %}
                     </select>
-                    <h5>Username:</h5>
-                    <input type="text" class="input_field" name="username" value="{{user.username}}"><br>
-                    <input type="submit" class="menu_button" value="Save">
-                </form>
-            </div>
-            <div class="rightside_form">
-                <h5>Change Password</h5>
-                <form action="/editpass/{{user.id}}" method="POST">
-                    {% csrf_token %}
-                    <h5>Password:</h5>
-                    <input type="password" class="input_field" name="password">
-                    <h5>Confirm Password:</h5>
-                    <input type="password" class="input_field" name="confirm_password"><br>
-                    <input type="submit" value="Change Password">
-                </form>
-            </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+            <a id="return_btn" href="/home/admin/users" class="btn btn-primary" role="button">Return to dashboard</a>
+        </div>
+        <hr>
+        <div class="footer">
+            <p>© Company 2017</p>
         </div>
     </div>
 </body>

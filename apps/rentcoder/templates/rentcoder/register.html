@@ -28,13 +28,13 @@
         <div id="reg">
             <h1>Registration</h1>
             {% if messages %}
-            <div class="error_box">
                 {% for message in messages %}
                     {% if message.tags == 'error' %}
-                <p class="{{message.tags}}">{{message}}</p>
+                        <div class="alert alert-danger" role="alert">
+                            <p id="reg_alert" class="{{message.tags}}">{{message}}</p>
+                        </div>
                     {% endif %}
                 {% endfor %}
-            </div>
             {% endif %}
             <form action="/process/add" method="POST">
                 {% csrf_token %}
@@ -60,7 +60,10 @@
                 </div>
                 <div class="form-group">
                     <label class="col-form-label" for="password">Password:</label>
-                    <input type="password" class="form-control" name="password" placeholder="Password">
+                    <input type="password" class="form-control" name="password" placeholder="Password" aria-describedby="passwordHelp">
+                    <small id="passwordHelp" class="form-text text-muted">
+                        Passwords must be at least 8 characters, including 1 lowercase, 1 uppercase, 1 special character, and 1 number
+                    </small>
                 </div>
                 <div class="form-group">
                     <label class="col-form-label" for="confirm_password">Confirm Password:</label>

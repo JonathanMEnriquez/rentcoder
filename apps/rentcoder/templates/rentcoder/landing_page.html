@@ -77,8 +77,8 @@
             {% if messages %}
                 {% for message in messages %}
                     {% if message.tags == 'warning' %}
-                        <div class="alert alert-error">
-                            <p class="{{message.tags}}">{{message}}</p>
+                        <div class="alert alert-danger" role="alert">
+                            <p id="login_alert" class="{{message.tags}}">{{message}}</p>
                         </div>
                     {% endif %}
                 {% endfor %}
@@ -91,7 +91,10 @@
                 </div>
                 <div class="form-group">
                     <label class="col-form-label" for="password">Password:</label>
-                    <input type="password" class="form-control" name="password" placeholder="Password">
+                    <input type="password" class="form-control" name="password" placeholder="Password" aria-describedby="passwordHelp">
+                    <small id="passwordHelp" class="form-text text-muted">
+                        Passwords must be at least 8 characters, including 1 lowercase, 1 uppercase, 1 special character, and 1 number
+                    </small>
                 </div>
                 <button type="submit" class="btn btn-primary">Log in</button>
             </form>

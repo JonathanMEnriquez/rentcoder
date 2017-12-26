@@ -32,7 +32,7 @@
         </nav>
         <div id="dash_body">
             <h3>Orders</h3>
-            <table class="table">
+            <table class="table table-hover">
                 <thead>
                     <th>Exam Subject</th>
                     <th>Date</th>
@@ -47,15 +47,17 @@
                     </tr>
                 {% endfor %}
                 </tbody>
-            </table>
-            <div id="new_messages">
+            </table>            
+            <a href="/order" class="btn btn-primary" role="button">Add Order</a>
+
+            <div id="new_message">
                 <h2>Leave a message for {{user.first_name}}</h2>
                 <form action="/add_message/{{user.id}}", method="POST">
                     {% csrf_token %}
-                    <textarea name="content" id="textarea" cols="160" rows="7"></textarea>
-                    <input type="submit" value="Post" id="register_button">
+                    <textarea class="form-control" name="content" cols="160" rows="5"></textarea>
+                    <button class="btn btn-outline-primary">Post</button>
                 </form>
-            </div>
+            </div>            
             <div id="messageboard">
                 {% for message in user_messages %}
                     <div class="messages">
@@ -72,12 +74,11 @@
                     {% endfor %}
                     <form action="/add_comment/{{user.id}}/{{message.id}}" method="POST">
                         {% csrf_token %}
-                        <textarea name="content" id="textarea" cols="100" rows="7"></textarea>
-                        <input type="submit" value="Post" id="register_button">
+                        <textarea class="form-control" name="content" cols="100" rows="5"></textarea>
+                        <button class="btn btn-outline-primary">Post</button>
                     </form>
                 {% endfor %}
             </div>
-            <a href="/order" class="btn btn-primary" role="button">Add Order</a>
         </div>
         <hr>
         <div class="footer">
