@@ -40,7 +40,7 @@ def remove_user(request, user_id):
         return redirect('/dashboard/'+str(request.session['id']))
 
     User.objects.removeUser(user_id)
-    return redirect('/home/admin/users')
+    return redirect('/home/admin')
 
 def remove_coder(request, coder_id):
     try:
@@ -52,7 +52,7 @@ def remove_coder(request, coder_id):
         return redirect('/dashboard/'+str(request.session['id']))
 
     Coder.objects.removeCoder(coder_id)
-    return redirect('/home/admin/coders')
+    return redirect('/home/admin')
 
 def remove_order(request, order_id):
     try:
@@ -64,7 +64,7 @@ def remove_order(request, order_id):
         return redirect('/dashboard/'+str(request.session['id']))
 
     Order.objects.removeOrder(order_id)
-    return redirect('/home/admin/orders')
+    return redirect('/home/admin')
 
 def order(request):
     try:
@@ -96,7 +96,7 @@ def charge(request):
     neworder = Order.objects.addOrder(cart, user_id)
     return redirect('/dashboard/'+str(request.session['id']))
 
-def admin_users(request):
+def admin_home(request):
     try:
         request.session['id']
     except:
@@ -107,7 +107,9 @@ def admin_users(request):
 
     context = {
         'user' : User.objects.get(id=request.session['id']),
-        'all_users' : User.objects.all()
+        'all_users' : User.objects.all(),
+        'all_coders': Coder.objects.all(),
+        'all_orders': Order.objects.all()
     }
     return render(request, 'rentcoder/admin_home.html', context)
 
@@ -297,8 +299,8 @@ def coder_profile(request, coder_id):
     }
     return render(request, 'rentcoder/coder_profile.html', context)
 
-def admin_home(request):
-    return redirect('/home/admin/users')
+# def admin_home(request):
+#     return redirect('/home/admin/users')
 
 def addmessage(request, user_id):
     if request.method == 'POST':
