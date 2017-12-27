@@ -349,14 +349,22 @@ class OrderManager(models.Manager):
 
     def editOrder(self, postData, order_id):
         order_edit = Order.objects.get(id = order_id)
-        order_edit.exam = postData['exam']
+        order_edit.exam_topic = postData['exam']
         order_edit.date = postData['date']
-        coder = Coder.objects.get(id = order_edit.coder.id)
-        user = Coder.objects.get(id = order_edit.user.id)
+        if order_edit.coder.id != int(postData['coder']):
+            oldcoder = Coder.objects.get(id = order_edit.coder.id)
+            if str(order_edit.date) == "January 26, 2018":
+                oldcoder.exam_1 = True
+            elif str(order_edit.date) == "February 23, 2018":
+                oldcoder.exam_2 = True
+            elif str(order_edit.date) == "March 23, 2018":
+                oldcoder.exam_3 = True
+        coder = Coder.objects.get(id = postData['coder'])
+        user = User.objects.get(id = postData['user'])
         order_edit.coder = coder
         order_edit.user = user
         order_edit.save()
-        return order_id
+        return order_edit
 
     def removeOrder(self, order_id):
         try:

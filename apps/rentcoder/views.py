@@ -237,7 +237,7 @@ def edit_order_process(request, order_id):
         for message in errors['errors']:
             messages.error(request, message)
     else:
-        Order.objects.editOrder(request.POST,order_id)
+        update = Order.objects.editOrder(request.POST,order_id)
         messages.success(request, 'Succesfully Updated Order')
     return redirect('/edit/order/{}'.format(order_id))
 
