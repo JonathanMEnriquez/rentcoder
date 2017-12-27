@@ -27,7 +27,6 @@
         </nav>
         <hr>
         <div id="admin_dash_body">
-            <h3>Administrator: {{user.first_name}}</h3>
             <h5>Edit Order Information</h5>
                 {% if messages %}
                     <div class="error_box">
@@ -38,7 +37,7 @@
                                 </div>
                             {% endif %}
                             {% if message.tags == 'success' %}
-                                <div class="alert alert-danger" role="alert">
+                                <div class="alert alert-success" role="alert">
                                     <p id="reg_alert" class="{{message.tags}}">{{message}}</p>
                                 </div>
                             {% endif %}
@@ -50,7 +49,13 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label class="col-form-label" for="exam">Exam:</label>
-                        <input type="text" class="form-control" name="exam" value="{{order.exam_topic}}">
+                        <select name="exam" class="form-control">
+                            <option value="Wed Fundamentals" {% if order.exam_topic == "Wed Fundamentals" %} selected = "selected"{% endif %}>Wed Fundamentals</option>
+                            <option value="Python/Django" {% if order.exam_topic == "Python/Django" %}selected = "selected"{% endif %}>Python/Django</option>
+                            <option value="Ruby on Rails" {% if order.exam_topic == "Ruby on Rails" %}selected = "selected"{% endif %}>Ruby on Rails</option>
+                            <option value="MEAN" {% if order.exam_topic == "MEAN" %}selected = "selected"{% endif %}>MEAN</option>
+                            <option value="iOS Applications" {% if order.exam_topic == "iOS Applications" %}selected = "selected"{% endif %}>iOS Applications</option>
+                        </select>
                     </div>
                     <div class="form-group col-md-6">
                         <label class="col-form-label" for="date">Date:</label>
@@ -66,25 +71,22 @@
                         <label class="col-form-label" for="coder">Coder:</label>
                         <select name="coder" class="form-control">
                             {% for coder in all_coders %}
-                                <option value="{{coder.id}}" {% if order.coder.id == coder.id %}selected = "selected"{% endif %}>{{coder.alias}}</option>
+                                <option value="{{coder.id}}" {% if order.coder.id == coder.id %}selected = "selected"{% endif %}>{{coder.first_name}}/{{coder.alias}}</option>
                             {% endfor %}
                         </select>
                     </div>
                     <div class="form-group col-md-6">
-                        <label class="col-form-label" for="alias">Alias:</label>
-                        <input type="text" class="form-control" name="alias" value="{{coder.alias}}">
+                        <label class="col-form-label" for="user">User:</label>
+                        <select name="user" class="form-control">
+                            {% for user in all_users %}
+                                <option value="{{user.id}}" {% if order.user.id == user.id %}selected = "selected"{% endif %}>{{user.first_name}} {{user.last_name}}</option>
+                            {% endfor %}
+                        </select>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-form-label" for="user">User:</label>
-                    <select name="user" class="form-control">
-                        {% for user in all_users %}
-                            <option value="{{user.id}}" {% if order.user.id == user.id %}selected = "selected"{% endif %}>{{user.first_name}} {{user.last_name}}</option>
-                        {% endfor %}
-                    </select>
                 </div>
                 <button type="submit" class="btn btn-primary">Update</button>
             </form>
+            <a id="return_btn" href="/home/admin" class="btn btn-primary" role="button">Return to dashboard</a>
         </div>
     </div>
 </body>

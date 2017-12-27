@@ -27,7 +27,6 @@
         </nav>
         <hr>
         <div id="admin_dash_body">
-            <h3>Administrator: {{user.first_name}}</h3>
             <h5 id="edit_info">Edit Coder Information</h5>
             {% if messages %}
                 <div class="error_box">
@@ -38,7 +37,7 @@
                             </div>
                         {% endif %}
                         {% if message.tags == 'success' %}
-                            <div class="alert alert-danger" role="alert">
+                            <div class="alert alert-success" role="alert">
                                 <p id="reg_alert" class="{{message.tags}}">{{message}}</p>
                             </div>
                         {% endif %}
@@ -69,11 +68,11 @@
                 </div>
                 <div class="form-group">
                     <label class="col-form-label" for="desc">Bio:</label>
-                    <textarea class="form-control" name="desc" cols="160" rows="5" value="{{coder.desc}}"></textarea>
+                    <textarea class="form-control" name="desc" cols="160" rows="5">{{coder.desc}}</textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Update</button>
             </form>
-            <a id="return_btn" href="/home/admin/users" class="btn btn-primary" role="button">Return to dashboard</a>
+            <a id="return_btn" href="/home/admin" class="btn btn-primary" role="button">Return to dashboard</a>
         </div>
         <hr>
         <div class="footer">
